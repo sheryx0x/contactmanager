@@ -5,8 +5,12 @@ from .models import *
 
 
 def home(request):
-    contacts = Contact.objects.all()
-    return render(request,'contactmanagerapp/home.html', {'contacts':contacts})
+    query = request.GET.get('search', '')  
+    if query:
+        contacts = Contact.objects.filter(name__icontains=query)  
+    else:
+        contacts = Contact.objects.all()  
+    return render(request, 'contactmanagerapp/home.html', {'contacts': contacts, 'query': query})
 
 
 def create_contact(request):

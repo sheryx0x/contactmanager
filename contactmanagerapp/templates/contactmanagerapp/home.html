@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Manager - Home</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+   
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        a {
+            text-decoration: none;
+            color: #fff;
+            background-color: #007bff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        a:hover {
+            background-color: #0056b3;
+            transform: translateY(-3px);
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        li {
+            background: #fff;
+            margin: 10px 0;
+            padding: 15px 20px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        li:nth-child(even) {
+            animation-delay: 0.2s;
+        }
+
+        li:nth-child(odd) {
+            animation-delay: 0.4s;
+        }
+
+        .contact-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .contact-info i {
+            font-size: 1.5em;
+            color: #007bff;
+        }
+
+        .actions a {
+            margin-left: 10px;
+            display: inline-block;
+        }
+
+        .actions a.edit {
+            background-color: #28a745;
+        }
+
+        .actions a.delete {
+            background-color: #dc3545;
+        }
+
+        .actions a.edit:hover {
+            background-color: #218838;
+        }
+
+        .actions a.delete:hover {
+            background-color: #c82333;
+        }
+
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Contact List</h1>
+    <a href="{% url 'create_contact' %}">
+        <i class="fas fa-plus-circle"></i> Add New Contact
+    </a>
+    <ul>
+        {% for contact in contacts %}
+            <li>
+                <div class="contact-info">
+                    <i class="fas fa-user-circle"></i>
+                    <span>{{ contact.name }}</span> - 
+                    <span>{{ contact.phone_number }}</span> - 
+                    <span>{{ contact.email }}</span>
+                </div>
+                <div class="actions">
+                    <a href="{% url 'update_contact' contact.id %}" class="edit">
+                        <i class="fas fa-edit"></i> Edit
+                    </a>
+                    <a href="{% url 'delete_contact' contact.id %}" class="delete">
+                        <i class="fas fa-trash-alt"></i> Delete
+                    </a>
+                </div>
+            </li>
+        {% empty %}
+            <li style="text-align: center; color: #999;">No contacts found.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
